@@ -29,54 +29,55 @@ public class SampleController {
 	@Autowired
 	SampleService sampleService;
 
-	@Value("${app.userService}")
-	String userServicePath;
+	// @Value("${app.userService}")
+	// String userServicePath;
 
-	@Value("${app.shipmentService}")
-	String shipmentServicePath;
+	// FIXME: Non funziona
+	// @Value("${app.shipment}")
+	String shipmentServicePath = "http://localhost:9091";
 
-	@Value("${app.biobankService}")
-	String biobankServicePath;
+	// @Value("${app.biobank}")
+	String biobankServicePath = "http://localhost:9093";
 
-	@Value("${app.donorService}")
-	String donorServicePath;
+	// @Value("${app.donor}")
+	String donorServicePath = "http://localhost:9095";
 
 	@Autowired
 	RestTemplate restTemplate;
 
-// FIRST USE CASE
+	// FIRST USE CASE
 	@PostMapping("")
 	public ResponseEntity<String> createSample(@Valid @RequestBody Sample newSample) {
 
 		ResponseEntity<String> response;
 		String endpoint = "";
-		Integer user_id = newSample.getUserId();
+		// Integer user_id = newSample.getUserId();
 		Integer box_id = newSample.getBoxId();
 		String location_id = newSample.getLocationId();
 		Integer donor_id = newSample.getDonorId();
 		Integer consent_id = newSample.getConsentId();
 
 		try {
-			if (user_id != null) {
-				endpoint = userServicePath + "/authentication/users/" + String.valueOf(user_id);
-				response = restTemplate.getForEntity(endpoint, String.class);
-			}
-			if (box_id != null) {
-				endpoint = shipmentServicePath + "/shipment/shipmentsBoxes/" + String.valueOf(box_id);
-				response = restTemplate.getForEntity(endpoint, String.class);
-			}
-			if (location_id != null) {
-				endpoint = biobankServicePath + "/biobank/freezers/" + location_id;
-				response = restTemplate.getForEntity(endpoint, String.class);
-			}
-			if (donor_id != null) {
-				endpoint = donorServicePath + "/donor/donors/" + String.valueOf(donor_id);
-				response = restTemplate.getForEntity(endpoint, String.class);
-			}
-			if (consent_id != null) {
-				endpoint = donorServicePath + "/donor/consents/" + String.valueOf(consent_id);
-				response = restTemplate.getForEntity(endpoint, String.class);
-			}
+			// if (user_id != null) {
+			// 	endpoint = userServicePath + "/authentication/users/" + String.valueOf(user_id);
+			// 	response = restTemplate.getForEntity(endpoint, String.class);
+			// }
+			// if (box_id != null) {
+			// 	endpoint = shipmentServicePath + "/shipment/shipmentsBoxes/" + String.valueOf(box_id);
+			// 	response = restTemplate.getForEntity(endpoint, String.class);
+			// }
+			// if (location_id != null) {
+			// 	endpoint = biobankServicePath + "/biobank/freezers/" + location_id;
+			// 	response = restTemplate.getForEntity(endpoint, String.class);
+			// }
+			// if (donor_id != null) {
+			// 	endpoint = donorServicePath + "/donor/donors/" + String.valueOf(donor_id);
+			// 	response = restTemplate.getForEntity(endpoint, String.class);
+			// }
+			// if (consent_id != null) {
+			// 	endpoint = donorServicePath + "/donor/consents/" + String.valueOf(consent_id);
+			// 	response = restTemplate.getForEntity(endpoint, String.class);
+			// }
 			sampleService.createSample(newSample);
 		} catch (final HttpClientErrorException e) {
 			System.out.println(e.getStatusCode());
@@ -84,7 +85,7 @@ public class SampleController {
 			return ResponseEntity.status(e.getStatusCode()).build();
 		}
 
-		// sampleService.createSample(newSample);
+		sampleService.createSample(newSample);
 		return ResponseEntity.ok().body("Sample Created");
 	}
 
@@ -106,15 +107,15 @@ public class SampleController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/{id}/user")
-	public ResponseEntity<String> getSampleUser(@PathVariable Integer id) {
-		String endpoint = "";
-		Optional<Sample> sample = sampleService.getSample(id);
-		if (sample.isPresent()) {
-			endpoint = userServicePath + "/users/" + String.valueOf(sample.get().getUserId());
-			return restTemplate.getForEntity(endpoint, String.class);
-		}
-		return ResponseEntity.notFound().build();
-	}
+	// @GetMapping("/{id}/user")
+	// public ResponseEntity<String> getSampleUser(@PathVariable Integer id) {
+	// 	String endpoint = "";
+	// 	Optional<Sample> sample = sampleService.getSample(id);
+	// 	if (sample.isPresent()) {
+	// 		endpoint = userServicePath + "/users/" + String.valueOf(sample.get().getUserId());
+	// 		return restTemplate.getForEntity(endpoint, String.class);
+	// 	}
+	// 	return ResponseEntity.notFound().build();
+	// }
 
 }
