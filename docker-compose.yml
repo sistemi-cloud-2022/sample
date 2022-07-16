@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  sampleService:
+    depends_on:
+      - sample_db
+    image: sample:latest
+    restart: always
+    ports:
+      - 9092:9092
+    environment:
+      SERVER_PORT: 9092
+      MYSQL_HOST: sample_db
+      # APP_USERSERVICE: "http://authenticationService:9090" TODO: Sostituire con keycloack?
+      APP_SHIPMENTSERVICE: "http://shipmentService:9091"
+      APP_BIOBANKSERVICE: "http://biobankService:9093"
+      APP_DONORSERVICE: "http://donorService:9095"
+  
+  sample_db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
