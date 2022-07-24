@@ -11,7 +11,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
@@ -34,7 +33,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD_AAL }}
 
     - name: Build Docker image
-      run: docker build --tag alessioliotta95/cloud-project:sample:latest .
+      run: docker build --tag alessioliotta95/cloud-project:sample .
 
     - name: Push on docker Hub
-      run: docker push alessioliotta95/cloud-project:sample:latest
+      run: docker push alessioliotta95/cloud-project:sample
