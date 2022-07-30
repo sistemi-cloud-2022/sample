@@ -25,3 +25,8 @@ spring:
 
 server:
   port: 9092
+
+app:
+  shipmentService: http://${SHIPMENT_HOST}:9092
+  biobankService: http://${BIOBANK_HOST}:9093
+  donorService: http://${DONOR_HOST}:9095
