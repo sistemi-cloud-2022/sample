@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,17 +34,17 @@ public class SampleController {
 	// String userServicePath;
 
 	// FIXME: Non funziona
-	// @Value("${app.shipment}")
+	@Value("${app.shipment}")
 	String shipmentServicePath = "http://localhost:9091";
 
-	// @Value("${app.biobank}")
+	@Value("${app.biobank}")
 	String biobankServicePath = "http://localhost:9093";
 
-	// @Value("${app.donor}")
+	@Value("${app.donor}")
 	String donorServicePath = "http://localhost:9095";
 
 	@Autowired
-	RestTemplate restTemplate;
+	KeycloakRestTemplate restTemplate;
 
 	// FIRST USE CASE
 	@PostMapping("")
@@ -61,22 +63,22 @@ public class SampleController {
 			// 	endpoint = userServicePath + "/authentication/users/" + String.valueOf(user_id);
 			// 	response = restTemplate.getForEntity(endpoint, String.class);
 			// }
-			// if (box_id != null) {
-			// 	endpoint = shipmentServicePath + "/shipment/shipmentsBoxes/" + String.valueOf(box_id);
-			// 	response = restTemplate.getForEntity(endpoint, String.class);
-			// }
-			// if (location_id != null) {
-			// 	endpoint = biobankServicePath + "/biobank/freezers/" + location_id;
-			// 	response = restTemplate.getForEntity(endpoint, String.class);
-			// }
-			// if (donor_id != null) {
-			// 	endpoint = donorServicePath + "/donor/donors/" + String.valueOf(donor_id);
-			// 	response = restTemplate.getForEntity(endpoint, String.class);
-			// }
-			// if (consent_id != null) {
-			// 	endpoint = donorServicePath + "/donor/consents/" + String.valueOf(consent_id);
-			// 	response = restTemplate.getForEntity(endpoint, String.class);
-			// }
+			if (box_id != null) {
+				endpoint = shipmentServicePath + "/shipment/shipmentsBoxes/" + String.valueOf(box_id);
+				response = restTemplate.getForEntity(endpoint, String.class);
+			}
+			if (location_id != null) {
+				endpoint = biobankServicePath + "/biobank/freezers/" + location_id;
+				response = restTemplate.getForEntity(endpoint, String.class);
+			}
+			if (donor_id != null) {
+				endpoint = donorServicePath + "/donor/donors/" + String.valueOf(donor_id);
+				response = restTemplate.getForEntity(endpoint, String.class);
+			}
+			if (consent_id != null) {
+				endpoint = donorServicePath + "/donor/consents/" + String.valueOf(consent_id);
+				response = restTemplate.getForEntity(endpoint, String.class);
+			}
 			sampleService.createSample(newSample);
 		} catch (final HttpClientErrorException e) {
 			System.out.println(e.getStatusCode());
