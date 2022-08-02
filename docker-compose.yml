@@ -12,9 +12,9 @@ services:
       SERVER_PORT: 9092
       MYSQL_HOST: sample_db
       # APP_USERSERVICE: "http://authenticationService:9090" TODO: Sostituire con keycloack?
-      APP_SHIPMENTSERVICE: "http://shipmentService:9091"
-      APP_BIOBANKSERVICE: "http://biobankService:9093"
-      APP_DONORSERVICE: "http://donorService:9095"
+      SHIPMENT_HOST: "http://shipmentService:9091"
+      BIOBANK_HOST: "http://biobankService:9093"
+      DONOR_HOST: "http://donorService:9095"
   
   sample_db:
     image: mysql:5.7
