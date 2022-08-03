@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class SampleController {
 	String donorServicePath = "http://localhost:9095";
 
 	@Autowired
-	RestTemplate restTemplate;
+	KeycloakRestTemplate restTemplate;
 
 	// FIRST USE CASE
 	@PostMapping("")
@@ -51,23 +52,20 @@ public class SampleController {
 
 		ResponseEntity<String> response;
 		String endpoint = "";
+		// Integer user_id = newSample.getUserId();
 		Integer box_id = newSample.getBoxId();
 		String location_id = newSample.getLocationId();
 		Integer donor_id = newSample.getDonorId();
 		Integer consent_id = newSample.getConsentId();
 
-
-		System.out.println(shipmentServicePath);
-		System.out.println(biobankServicePath);
-		System.out.println(donorServicePath);
-
-
 		try {
+			// if (user_id != null) {
+			// 	endpoint = userServicePath + "/authentication/users/" + String.valueOf(user_id);
+			// 	response = restTemplate.getForEntity(endpoint, String.class);
+			// }
 			if (box_id != null) {
-				System.out.println("PASSO 1");
 				endpoint = shipmentServicePath + "/shipment/shipmentsBoxes/" + String.valueOf(box_id);
 				response = restTemplate.getForEntity(endpoint, String.class);
-				System.out.println(response);
 			}
 			if (location_id != null) {
 				endpoint = biobankServicePath + "/biobank/freezers/" + location_id;
