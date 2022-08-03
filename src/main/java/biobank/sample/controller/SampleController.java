@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 import biobank.sample.service.SampleService;
 import biobank.sample.domain.Sample;
@@ -52,20 +51,22 @@ public class SampleController {
 
 		ResponseEntity<String> response;
 		String endpoint = "";
-		// Integer user_id = newSample.getUserId();
 		Integer box_id = newSample.getBoxId();
 		String location_id = newSample.getLocationId();
 		Integer donor_id = newSample.getDonorId();
 		Integer consent_id = newSample.getConsentId();
 
+
+		System.out.println(shipmentServicePath);
+		System.out.println(biobankServicePath);
+		System.out.println(donorServicePath);
+
 		try {
-			// if (user_id != null) {
-			// 	endpoint = userServicePath + "/authentication/users/" + String.valueOf(user_id);
-			// 	response = restTemplate.getForEntity(endpoint, String.class);
-			// }
 			if (box_id != null) {
+				System.out.println("PASSO 1");
 				endpoint = shipmentServicePath + "/shipment/shipmentsBoxes/" + String.valueOf(box_id);
 				response = restTemplate.getForEntity(endpoint, String.class);
+				System.out.println(response);
 			}
 			if (location_id != null) {
 				endpoint = biobankServicePath + "/biobank/freezers/" + location_id;
